@@ -1,0 +1,1 @@
+java -jar money-transfer-service-1.0-SNAPSHOT.jar
