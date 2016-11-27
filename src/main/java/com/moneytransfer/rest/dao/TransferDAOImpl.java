@@ -26,6 +26,7 @@ public class TransferDAOImpl implements TransferDAO {
         accountTo.setBalance(accountToBalance);
 
         session.save(transfer);
+        session.flush();
         session.getTransaction().commit();
         session.close();
         return transfer;

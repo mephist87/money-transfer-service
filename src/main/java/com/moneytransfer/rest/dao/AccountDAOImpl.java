@@ -13,6 +13,7 @@ public class AccountDAOImpl implements AccountDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(account);
+        session.flush();
         session.getTransaction().commit();
         session.close();
         return account;

@@ -48,65 +48,36 @@ public class HelperService {
     @Produces(MediaType.TEXT_HTML)
     public String createTestData()
     {
-        StringBuilder result = new StringBuilder();
-
-        List<UserEntity> testUsers = new ArrayList<>();
         UserEntity user1 = new UserEntity("Sergey", "Krasnov");
         UserEntity user2 = new UserEntity("John", "Doe");
         UserEntity user3 = new UserEntity("Christopher", "Nolan");
-        testUsers.addAll(Arrays.asList(user1, user2, user3));
-        result.append(createUsers(testUsers));
+        Arrays.asList(user1, user2, user3).forEach(user -> userDAO.create(user));
 
-        List<AccountEntity> testAccounts = new ArrayList<>();
         AccountEntity account1 = new AccountEntity(user1, getRandomBalance());
         AccountEntity account2 = new AccountEntity(user2, getRandomBalance());
         AccountEntity account3 = new AccountEntity(user3, getRandomBalance());
-        testAccounts.addAll(Arrays.asList(account1, account2, account3));
-        result.append(createAccounts(testAccounts));
+        Arrays.asList(account1, account2, account3).forEach(account -> accountDAO.create(account));
 
-        List<TransferEntity> testTransfers = new ArrayList<>();
         TransferEntity transfer1 = new TransferEntity(account1, account2, 20);
         TransferEntity transfer2 = new TransferEntity(account2, account3, 50);
         TransferEntity transfer3 = new TransferEntity(account1, account3, 70);
         TransferEntity transfer4 = new TransferEntity(account3, account1, 22);
         TransferEntity transfer5 = new TransferEntity(account2, account3, 60);
-        testTransfers.addAll(Arrays.asList(transfer1, transfer2, transfer3, transfer4, transfer5));
-        result.append(createMoneyTransfers(testTransfers));
+        Arrays.asList(transfer1, transfer2, transfer3, transfer4, transfer5).forEach(transfer -> transferDAO.create(transfer));
+
+        StringBuilder result = new StringBuilder();
+        result.append("---Users---\n");
+        userDAO.list().forEach(user -> result.append(user.toString()).append("\n"));
+        result.append("---Accounts---\n");
+        accountDAO.list().forEach(account -> result.append(account.toString()).append("\n"));
+        result.append("---Transfers---\n");
+        transferDAO.list().forEach(transfer -> result.append(transfer.toString()).append("\n"));
 
         return result.toString();
     }
 
     private int getRandomBalance() {
         return ThreadLocalRandom.current().nextInt(MIN_BALANCE, MAX_BALANCE);
-    }
-
-    private StringBuilder createUsers(List<UserEntity> users) {
-        StringBuilder result = new StringBuilder("---Users---\n");
-        users.forEach(user -> {
-                    userDAO.create(user);
-                    result.append(user.toString()).append("\n");
-                }
-        );
-        return result.append("\n");
-    }
-
-    private StringBuilder createAccounts(List<AccountEntity> accounts) {
-        StringBuilder result = new StringBuilder("---Accounts---\n");
-        accounts.forEach(account -> {
-            accountDAO.create(account);
-            result.append(account.toString()).append("\n");
-        });
-        return result.append("\n");
-    }
-
-    private StringBuilder createMoneyTransfers(List<TransferEntity> transfers) {
-        StringBuilder result = new StringBuilder("---Transfers---\n");
-        transfers.forEach(transfer -> {
-                    transferDAO.create(transfer);
-                    result.append(transfer.toString()).append("\n");
-                }
-        );
-        return result.append("\n");
     }
 
 }

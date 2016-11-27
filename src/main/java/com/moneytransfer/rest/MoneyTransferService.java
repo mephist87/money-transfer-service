@@ -108,8 +108,8 @@ public class MoneyTransferService {
 
         AccountEntity accountFrom = accountDAO.get(accountFromId);
         AccountEntity accountTo = accountDAO.get(accountToId);
-        if (accountFrom.getId() != 0 && accountTo.getId() != 0) {
-            transferDAO.makeTransfer(accountFrom, accountTo, transferSum);
+        if (accountFrom != null && accountTo != null) {
+            return transferDAO.makeTransfer(accountFrom, accountTo, transferSum);
         }
         return null;
     }
