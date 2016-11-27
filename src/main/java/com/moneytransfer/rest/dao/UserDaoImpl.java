@@ -32,7 +32,6 @@ public class UserDaoImpl implements UserDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         UserEntity user = (UserEntity) session.get(UserEntity.class, userId);
-        if (user == null) user = new UserEntity();
         session.close();
         return user;
     }

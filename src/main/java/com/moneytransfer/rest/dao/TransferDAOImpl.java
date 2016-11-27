@@ -5,13 +5,9 @@ import com.moneytransfer.rest.model.TransferEntity;
 import com.moneytransfer.rest.utils.HibernateUtil;
 import org.hibernate.Session;
 
-import javax.inject.Inject;
 import java.util.List;
 
 public class TransferDAOImpl implements TransferDAO {
-
-    @Inject
-    private AccountDAO accountDAO;
 
     @Override
     public TransferEntity create(TransferEntity transfer) {
@@ -40,7 +36,7 @@ public class TransferDAOImpl implements TransferDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         boolean isDeleted = false;
-        if (transfer != null && transfer.getId() != 0) {
+        if (transfer != null) {
             session.delete(transfer);
             isDeleted = true;
         }
@@ -80,7 +76,6 @@ public class TransferDAOImpl implements TransferDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         TransferEntity transfer = (TransferEntity) session.get(TransferEntity.class, transferId);
-        if (transfer == null) transfer = new TransferEntity();
         session.close();
         return transfer;
     }

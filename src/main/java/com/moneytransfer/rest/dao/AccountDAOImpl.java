@@ -32,7 +32,6 @@ public class AccountDAOImpl implements AccountDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         AccountEntity account = (AccountEntity) session.get(AccountEntity.class, accountId);
-        if (account == null) account = new AccountEntity();
         session.close();
         return account;
     }
@@ -42,7 +41,7 @@ public class AccountDAOImpl implements AccountDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         boolean isDeleted = false;
-        if (account != null && account.getId() != 0) {
+        if (account != null) {
             session.delete(account);
             isDeleted = true;
         }
