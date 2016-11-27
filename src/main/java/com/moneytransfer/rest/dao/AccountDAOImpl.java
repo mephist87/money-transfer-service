@@ -9,7 +9,7 @@ import java.util.List;
 public class AccountDAOImpl implements AccountDAO {
 
     @Override
-    public AccountEntity createOrUpdate(AccountEntity account) {
+    public AccountEntity create(AccountEntity account) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(account);
@@ -31,10 +31,10 @@ public class AccountDAOImpl implements AccountDAO {
     public AccountEntity get(int accountId) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        AccountEntity user = (AccountEntity) session.get(AccountEntity.class, accountId);
-        if (user == null) user = new AccountEntity();
+        AccountEntity account = (AccountEntity) session.get(AccountEntity.class, accountId);
+        if (account == null) account = new AccountEntity();
         session.close();
-        return user;
+        return account;
     }
 
     @Override

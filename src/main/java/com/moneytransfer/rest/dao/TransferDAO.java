@@ -6,7 +6,7 @@ import com.moneytransfer.rest.model.TransferEntity;
 import java.util.List;
 
 public interface TransferDAO {
-    TransferEntity createOrUpdate(TransferEntity transfer);
+    TransferEntity create(TransferEntity transfer);
     boolean delete(TransferEntity transfer);
     TransferEntity makeTransfer(AccountEntity accountFrom, AccountEntity accountTo, int sum);
     boolean rollbackTransfer(TransferEntity transfer);

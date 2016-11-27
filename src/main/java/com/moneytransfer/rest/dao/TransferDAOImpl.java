@@ -14,7 +14,7 @@ public class TransferDAOImpl implements TransferDAO {
     private AccountDAO accountDAO;
 
     @Override
-    public TransferEntity createOrUpdate(TransferEntity transfer) {
+    public TransferEntity create(TransferEntity transfer) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
@@ -28,8 +28,6 @@ public class TransferDAOImpl implements TransferDAO {
         accountToBalance += sum;
         accountFrom.setBalance(accountFromBalance);
         accountTo.setBalance(accountToBalance);
-        accountDAO.createOrUpdate(accountFrom);
-        accountDAO.createOrUpdate(accountTo);
 
         session.save(transfer);
         session.getTransaction().commit();
@@ -54,21 +52,45 @@ public class TransferDAOImpl implements TransferDAO {
     @Override
     public TransferEntity makeTransfer(AccountEntity accountFrom, AccountEntity accountTo, int sum) {
         TransferEntity transfer = new TransferEntity(accountFrom, accountTo, sum);
-        return createOrUpdate(transfer);
+        return create(transfer);
     }
 
     @Override
     public boolean rollbackTransfer(TransferEntity transfer) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        AccountEntity accountFrom = transfer.getAccountFrom();
+        AccountEntity accountTo = transfer.getAccountTo();
+        if (accountFrom != null && accountTo != null) {
+            int transferSum = transfer.getSum();
+            int accountFromCurrentBalance = accountFrom.getBalance();
+            int accountToCurrentBalance = accountTo.getBalance();
+            accountFrom.setBalance(accountFromCurrentBalance + transferSum);
+            accountTo.setBalance(accountToCurrentBalance - transferSum);
+            delete(transfer);
+            session.close();
+            return true;
+        }
+        session.close();
         return false;
     }
 
     @Override
     public TransferEntity get(int transferId) {
-        return null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        TransferEntity transfer = (TransferEntity) session.get(TransferEntity.class, transferId);
+        if (transfer == null) transfer = new TransferEntity();
+        session.close();
+        return transfer;
     }
 
     @Override
     public List<TransferEntity> list() {
-        return null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List<TransferEntity> list = session.createCriteria(TransferEntity.class).list();
+        session.close();
+        return list;
     }
 }

@@ -1,13 +1,13 @@
 package com.moneytransfer.rest;
 
-//import java.util.Optional;
 import com.moneytransfer.rest.dao.AccountDAO;
+import com.moneytransfer.rest.dao.TransferDAO;
 import com.moneytransfer.rest.dao.UserDAO;
 import com.moneytransfer.rest.model.AccountEntity;
+import com.moneytransfer.rest.model.TransferEntity;
 import com.moneytransfer.rest.model.UserEntity;
 
 import java.util.List;
-//import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,6 +20,9 @@ public class MoneyTransferService {
 
     @Inject
     private AccountDAO accountDAO;
+
+    @Inject
+    private TransferDAO transferDAO;
 
     @POST
     @Path("/users/create")
@@ -65,7 +68,7 @@ public class MoneyTransferService {
         UserEntity user = userDAO.get(userId);
         if (user != null && user.getId() != 0) {
             account = new AccountEntity(user, balance);
-            accountDAO.createOrUpdate(account);
+            accountDAO.create(account);
         }
         return account;
     }
@@ -93,21 +96,53 @@ public class MoneyTransferService {
         return accountDAO.delete(account) ? "Account Deleted:\n" + account.toString() : "Unable to delete account with id = " + accountId;
     }
 
-//    @GET
-//    @Path("{id}")
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public String getCustomer(@PathParam("id") long id) {
-//        Optional<Customer> match
-//                = cList.stream()
-//                .filter(c -> c.getId() == id)
-//                .findFirst();
-//        StringBuilder result = new StringBuilder("---Customer---\n");
-//        for (Customer c : cList) {
-//            if (c.getId() == id) {
-//                result.append(c.toString()).append("\n");
-//                return result.toString();
-//            }
-//        }
-//        return "Customer not found";
-//    }
+    @POST
+    @Path("/transfers/makeTransaction")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public TransferEntity makeTransfer(@QueryParam("accountFromId") int accountFromId,
+                                       @QueryParam("accountToId") int accountToId,
+                                       @QueryParam("transferSum") int transferSum) {
+
+        AccountEntity accountFrom = accountDAO.get(accountFromId);
+        AccountEntity accountTo = accountDAO.get(accountToId);
+        if (accountFrom.getId() != 0 && accountTo.getId() != 0) {
+            transferDAO.makeTransfer(accountFrom, accountTo, transferSum);
+        }
+        return null;
+    }
+
+    @GET
+    @Path("/transfers/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public TransferEntity getTransfer(@PathParam("id") int transferId) {
+        return transferDAO.get(transferId);
+    }
+
+    @GET
+    @Path("/transfers/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<TransferEntity> getAllTransfers() {
+        return transferDAO.list();
+    }
+
+    @DELETE
+    @Path("/transfers/delete/{id}")
+    @Produces(MediaType.TEXT_HTML)
+    public String deleteTransfer(@PathParam("id") int transferId)
+    {
+        TransferEntity transfer = transferDAO.get(transferId);
+        return transferDAO.delete(transfer) ? "Transfer Deleted:\n" + transfer.toString() : "Unable to delete transfer with id = " + transferId;
+    }
+
+    @POST
+    @Path("/transfers/rollbackTransaction")
+    @Produces(MediaType.TEXT_HTML)
+    public String makeTransfer(@QueryParam("transferId") int transferId) {
+        TransferEntity transfer = transferDAO.get(transferId);
+        if (transfer.getId() != 0) {
+            return transferDAO.rollbackTransfer(transfer) ? "Transfer rolled back:\n" + transfer.toString() : "Unable to rollback transfer with id = " + transferId;
+        }
+        return "Transfer with id = " + transferId + " not found";
+    }
 }

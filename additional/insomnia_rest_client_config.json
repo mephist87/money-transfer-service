@@ -1,0 +1,158 @@
+{
+  "_type": "export",
+  "__export_format": 1,
+  "__export_date": "2016-11-25T15:02:41.206Z",
+  "__export_source": "insomnia.chrome.app:v2.7.0",
+  "items": [
+    {
+      "_type": "request_group",
+      "_id": "grp_1465909346321",
+      "name": "Revolut",
+      "environments": {},
+      "requests": [
+        {
+          "_type": "request",
+          "_id": "req_1479984088614",
+          "url": "http://localhost:8080/moneytransfer/isworking",
+          "method": "GET",
+          "body": "{}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[Common]: isworking"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1479983532009",
+          "url": "http://localhost:8080/moneytransfer/createTestData",
+          "method": "POST",
+          "body": "{}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[Common]: createTestData"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1465909346321",
+          "url": "http://localhost:8080/myapp/users/create",
+          "method": "POST",
+          "body": "",
+          "headers": [],
+          "params": [
+            {
+              "name": "firstName",
+              "value": "Ivan"
+            },
+            {
+              "name": "lastName",
+              "value": "Bobkov"
+            }
+          ],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[User]: createUser"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1479904149290",
+          "url": "http://localhost:8080/myapp/users/1",
+          "method": "GET",
+          "body": "{}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[User]: getUser"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1479902018021",
+          "url": "http://localhost:8080/moneytransfer/users/all",
+          "method": "GET",
+          "body": "{}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[User]: getAllUsers"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1479986709515",
+          "url": "http://localhost:8080/moneytransfer/users/delete/2",
+          "method": "DELETE",
+          "body": "{}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[User]: deleteUser"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1479991744483",
+          "url": "http://localhost:8080/moneytransfer/accounts/all",
+          "method": "GET",
+          "body": "{}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[Account]: getAllAccounts"
+        }
+      ]
+    }
+  ]
+}

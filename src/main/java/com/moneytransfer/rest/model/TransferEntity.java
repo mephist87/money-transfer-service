@@ -58,12 +58,22 @@ public class TransferEntity {
     }
 
     @Basic
-    @Column(name = "SUM")
+    @Column(name = "TRANSFER_SUM")
     public int getSum() {
         return sum;
     }
 
     public void setSum(int sum) {
         this.sum = sum;
+    }
+
+    @Override
+    public String toString() {
+        return "TransferEntity{" +
+                "id=" + id +
+                ", accountFrom=" + accountFrom.getId() +
+                ", accountTo=" + accountTo.getId() +
+                ", sum=" + sum +
+                '}';
     }
 }

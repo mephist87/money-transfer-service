@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -50,19 +51,33 @@ public class HelperService {
         StringBuilder result = new StringBuilder();
 
         List<UserEntity> testUsers = new ArrayList<>();
-        testUsers.add(new UserEntity("Sergey", "Krasnov"));
-        testUsers.add(new UserEntity("John", "Doe"));
-        testUsers.add(new UserEntity("Christopher", "Nolan"));
+        UserEntity user1 = new UserEntity("Sergey", "Krasnov");
+        UserEntity user2 = new UserEntity("John", "Doe");
+        UserEntity user3 = new UserEntity("Christopher", "Nolan");
+        testUsers.addAll(Arrays.asList(user1, user2, user3));
         result.append(createUsers(testUsers));
 
         List<AccountEntity> testAccounts = new ArrayList<>();
-        for (UserEntity user : userDAO.list()) {
-            int randomBalance = ThreadLocalRandom.current().nextInt(MIN_BALANCE, MAX_BALANCE);
-            testAccounts.add(new AccountEntity(user, randomBalance));
-        }
+        AccountEntity account1 = new AccountEntity(user1, getRandomBalance());
+        AccountEntity account2 = new AccountEntity(user2, getRandomBalance());
+        AccountEntity account3 = new AccountEntity(user3, getRandomBalance());
+        testAccounts.addAll(Arrays.asList(account1, account2, account3));
         result.append(createAccounts(testAccounts));
 
+        List<TransferEntity> testTransfers = new ArrayList<>();
+        TransferEntity transfer1 = new TransferEntity(account1, account2, 20);
+        TransferEntity transfer2 = new TransferEntity(account2, account3, 50);
+        TransferEntity transfer3 = new TransferEntity(account1, account3, 70);
+        TransferEntity transfer4 = new TransferEntity(account3, account1, 22);
+        TransferEntity transfer5 = new TransferEntity(account2, account3, 60);
+        testTransfers.addAll(Arrays.asList(transfer1, transfer2, transfer3, transfer4, transfer5));
+        result.append(createMoneyTransfers(testTransfers));
+
         return result.toString();
+    }
+
+    private int getRandomBalance() {
+        return ThreadLocalRandom.current().nextInt(MIN_BALANCE, MAX_BALANCE);
     }
 
     private StringBuilder createUsers(List<UserEntity> users) {
@@ -78,7 +93,7 @@ public class HelperService {
     private StringBuilder createAccounts(List<AccountEntity> accounts) {
         StringBuilder result = new StringBuilder("---Accounts---\n");
         accounts.forEach(account -> {
-            accountDAO.createOrUpdate(account);
+            accountDAO.create(account);
             result.append(account.toString()).append("\n");
         });
         return result.append("\n");
@@ -87,7 +102,7 @@ public class HelperService {
     private StringBuilder createMoneyTransfers(List<TransferEntity> transfers) {
         StringBuilder result = new StringBuilder("---Transfers---\n");
         transfers.forEach(transfer -> {
-                    transferDAO.createOrUpdate(transfer);
+                    transferDAO.create(transfer);
                     result.append(transfer.toString()).append("\n");
                 }
         );
