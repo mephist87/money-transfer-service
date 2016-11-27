@@ -9,7 +9,7 @@ import java.util.List;
 public class UserDaoImpl implements UserDAO {
 
     @Override
-    public UserEntity createOrUpdate(UserEntity user) {
+    public UserEntity create(UserEntity user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(user);
@@ -23,6 +23,7 @@ public class UserDaoImpl implements UserDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         List<UserEntity> list = session.createCriteria(UserEntity.class).list();
+        session.getTransaction().commit();
         session.close();
         return list;
     }
@@ -32,6 +33,7 @@ public class UserDaoImpl implements UserDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         UserEntity user = (UserEntity) session.get(UserEntity.class, userId);
+        session.getTransaction().commit();
         session.close();
         return user;
     }
@@ -46,6 +48,7 @@ public class UserDaoImpl implements UserDAO {
             isDeleted = true;
         }
         session.flush();
+        session.getTransaction().commit();
         session.close();
         return isDeleted;
     }

@@ -41,6 +41,7 @@ public class TransferDAOImpl implements TransferDAO {
             isDeleted = true;
         }
         session.flush();
+        session.getTransaction().commit();
         session.close();
         return isDeleted;
     }
@@ -67,6 +68,7 @@ public class TransferDAOImpl implements TransferDAO {
             session.close();
             return true;
         }
+        session.getTransaction().commit();
         session.close();
         return false;
     }
@@ -76,6 +78,7 @@ public class TransferDAOImpl implements TransferDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         TransferEntity transfer = (TransferEntity) session.get(TransferEntity.class, transferId);
+        session.getTransaction().commit();
         session.close();
         return transfer;
     }
@@ -85,6 +88,7 @@ public class TransferDAOImpl implements TransferDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         List<TransferEntity> list = session.createCriteria(TransferEntity.class).list();
+        session.getTransaction().commit();
         session.close();
         return list;
     }

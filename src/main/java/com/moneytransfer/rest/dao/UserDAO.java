@@ -5,7 +5,7 @@ import com.moneytransfer.rest.model.UserEntity;
 import java.util.List;
 
 public interface UserDAO {
-    UserEntity createOrUpdate(UserEntity user);
+    UserEntity create(UserEntity user);
     List<UserEntity> list();
     UserEntity get(int userId);
     boolean delete(UserEntity user);

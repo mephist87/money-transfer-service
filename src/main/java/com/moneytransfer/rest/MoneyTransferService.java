@@ -33,7 +33,7 @@ public class MoneyTransferService {
     public UserEntity createUser(@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName)
     {
         UserEntity user = new UserEntity(firstName, lastName);
-        userDAO.createOrUpdate(user);
+        userDAO.create(user);
         return user;
     }
 

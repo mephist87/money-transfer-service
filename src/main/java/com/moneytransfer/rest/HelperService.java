@@ -83,7 +83,7 @@ public class HelperService {
     private StringBuilder createUsers(List<UserEntity> users) {
         StringBuilder result = new StringBuilder("---Users---\n");
         users.forEach(user -> {
-                    userDAO.createOrUpdate(user);
+                    userDAO.create(user);
                     result.append(user.toString()).append("\n");
                 }
         );
