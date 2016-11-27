@@ -1,8 +1,10 @@
 package com.moneytransfer.rest;
 
 import com.moneytransfer.rest.dao.AccountDAO;
+import com.moneytransfer.rest.dao.TransferDAO;
 import com.moneytransfer.rest.dao.UserDAO;
 import com.moneytransfer.rest.model.AccountEntity;
+import com.moneytransfer.rest.model.TransferEntity;
 import com.moneytransfer.rest.model.UserEntity;
 
 import javax.inject.Inject;
@@ -23,6 +25,9 @@ public class HelperService {
 
     @Inject
     private AccountDAO accountDAO;
+
+    @Inject
+    private TransferDAO transferDAO;
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -60,37 +65,32 @@ public class HelperService {
         return result.toString();
     }
 
-//    public static CopyOnWriteArrayList<Customer> getInstance(){
-//        return cList;
-//    }
-//
-    public StringBuilder createUsers(List<UserEntity> users){
-//        users.stream()
-//                .forEach(i -> System.out.println(i));
-//        String cString =
-//                users.stream()
-//                        .map( c -> c.toString())
-//                        .collect(Collectors.joining("\n"));
+    private StringBuilder createUsers(List<UserEntity> users) {
         StringBuilder result = new StringBuilder("---Users---\n");
-        for (UserEntity user : users) {
-            userDAO.createOrUpdate(user);
-            result.append(user.toString()).append("\n");
-        }
+        users.forEach(user -> {
+                    userDAO.createOrUpdate(user);
+                    result.append(user.toString()).append("\n");
+                }
+        );
         return result.append("\n");
     }
 
-    public StringBuilder createAccounts(List<AccountEntity> accounts){
-//        users.stream()
-//                .forEach(i -> System.out.println(i));
-//        String cString =
-//                users.stream()
-//                        .map( c -> c.toString())
-//                        .collect(Collectors.joining("\n"));
+    private StringBuilder createAccounts(List<AccountEntity> accounts) {
         StringBuilder result = new StringBuilder("---Accounts---\n");
-        for (AccountEntity account : accounts) {
+        accounts.forEach(account -> {
             accountDAO.createOrUpdate(account);
             result.append(account.toString()).append("\n");
-        }
+        });
+        return result.append("\n");
+    }
+
+    private StringBuilder createMoneyTransfers(List<TransferEntity> transfers) {
+        StringBuilder result = new StringBuilder("---Transfers---\n");
+        transfers.forEach(transfer -> {
+                    transferDAO.createOrUpdate(transfer);
+                    result.append(transfer.toString()).append("\n");
+                }
+        );
         return result.append("\n");
     }
 

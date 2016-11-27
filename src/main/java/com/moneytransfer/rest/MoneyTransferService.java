@@ -15,8 +15,6 @@ import javax.ws.rs.core.MediaType;
 @Path("/")
 public class MoneyTransferService {
 
-//    private final CopyOnWriteArrayList<Customer> cList = CustomerList.getInstance();
-
     @Inject
     private UserDAO userDAO;
 

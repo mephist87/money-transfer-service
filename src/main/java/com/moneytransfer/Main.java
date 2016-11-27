@@ -1,9 +1,6 @@
 package com.moneytransfer;
 
-import com.moneytransfer.rest.dao.AccountDAO;
-import com.moneytransfer.rest.dao.AccountDAOImpl;
-import com.moneytransfer.rest.dao.UserDAO;
-import com.moneytransfer.rest.dao.UserDaoImpl;
+import com.moneytransfer.rest.dao.*;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -41,7 +38,7 @@ public class Main {
 
     // create a resource config that scans for JAX-RS resources and providers
     // in com.inmemorydbws.rest package
-    public static ResourceConfig createResourceConfiguration() {
+    private static ResourceConfig createResourceConfiguration() {
         return new ResourceConfig()
                 .packages("com.moneytransfer.rest")
                 .register(createMoxyJsonResolver())
@@ -50,11 +47,12 @@ public class Main {
                     protected void configure() {
                         bind(UserDaoImpl.class).to(UserDAO.class);
                         bind(AccountDAOImpl.class).to(AccountDAO.class);
+                        bind(TransferDAOImpl.class).to(TransferDAO.class);
                     }
                 });
     }
 
-    public static ContextResolver<MoxyJsonConfig> createMoxyJsonResolver() {
+    private static ContextResolver<MoxyJsonConfig> createMoxyJsonResolver() {
         final MoxyJsonConfig moxyJsonConfig = new MoxyJsonConfig();
         Map<String, String> namespacePrefixMapper = new HashMap<>(1);
         namespacePrefixMapper.put("http://www.w3.org/2001/XMLSchema-instance", "xsi");

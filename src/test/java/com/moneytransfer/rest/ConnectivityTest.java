@@ -1,4 +1,4 @@
-package com.inmemorydbws.rest;
+package com.moneytransfer.rest;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

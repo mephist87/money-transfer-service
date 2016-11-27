@@ -1,6 +1,8 @@
 package com.moneytransfer.rest.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -8,16 +10,16 @@ import javax.persistence.*;
 @Table(name = "TRANSFER", uniqueConstraints = {@UniqueConstraint(columnNames = "TRANSFER_ID")})
 public class TransferEntity {
     private int id;
-    private int accountFromId;
-    private int accountToId;
+    private AccountEntity accountFrom;
+    private AccountEntity accountTo;
     private int sum;
 
     public TransferEntity() {
     }
 
-    public TransferEntity(int accountFromId, int accountToId, int sum) {
-        this.accountFromId = accountFromId;
-        this.accountToId = accountToId;
+    public TransferEntity(AccountEntity accountFrom, AccountEntity accountTo, int sum) {
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
         this.sum = sum;
     }
 
@@ -33,24 +35,26 @@ public class TransferEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "ACCOUNT_FROM_ID")
-    public int getAccountFromId() {
-        return accountFromId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "ACCOUNT_FROM_ID", referencedColumnName = "ACCOUNT_ID")
+    public AccountEntity getAccountFrom() {
+        return accountFrom;
     }
 
-    public void setAccountFromId(int accountFromId) {
-        this.accountFromId = accountFromId;
+    public void setAccountFrom(AccountEntity accountFrom) {
+        this.accountFrom = accountFrom;
     }
 
-    @Basic
-    @Column(name = "ACCOUNT_TO_ID")
-    public int getAccountToId() {
-        return accountToId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "ACCOUNT_TO_ID", referencedColumnName = "ACCOUNT_ID")
+    public AccountEntity getAccountTo() {
+        return accountTo;
     }
 
-    public void setAccountToId(int accountToId) {
-        this.accountToId = accountToId;
+    public void setAccountTo(AccountEntity accountTo) {
+        this.accountTo = accountTo;
     }
 
     @Basic
