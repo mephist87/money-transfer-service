@@ -9,9 +9,11 @@ import com.moneytransfer.rest.model.UserEntity;
 
 import java.util.List;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+@Transactional
 @Path("/")
 public class MoneyTransferService {
 

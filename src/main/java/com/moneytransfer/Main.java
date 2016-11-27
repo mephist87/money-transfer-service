@@ -37,7 +37,7 @@ public class Main {
     }
 
     // create a resource config that scans for JAX-RS resources and providers
-    // in com.inmemorydbws.rest package
+    // in com.moneytransfer.rest package
     private static ResourceConfig createResourceConfiguration() {
         return new ResourceConfig()
                 .packages("com.moneytransfer.rest")
