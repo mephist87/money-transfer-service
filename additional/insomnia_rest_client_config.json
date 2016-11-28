@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 1,
-  "__export_date": "2016-11-25T15:02:41.206Z",
+  "__export_date": "2016-11-28T00:47:29.899Z",
   "__export_source": "insomnia.chrome.app:v2.7.0",
   "items": [
     {
@@ -34,7 +34,7 @@
           "_id": "req_1479983532009",
           "url": "http://localhost:8080/moneytransfer/createTestData",
           "method": "POST",
-          "body": "{}",
+          "body": "",
           "headers": [],
           "params": [],
           "authentication": {
@@ -51,18 +51,18 @@
         {
           "_type": "request",
           "_id": "req_1465909346321",
-          "url": "http://localhost:8080/myapp/users/create",
+          "url": "http://localhost:8080/moneytransfer/users/create",
           "method": "POST",
           "body": "",
           "headers": [],
           "params": [
             {
               "name": "firstName",
-              "value": "Ivan"
+              "value": "Mike"
             },
             {
               "name": "lastName",
-              "value": "Bobkov"
+              "value": "Tyson"
             }
           ],
           "authentication": {
@@ -79,7 +79,7 @@
         {
           "_type": "request",
           "_id": "req_1479904149290",
-          "url": "http://localhost:8080/myapp/users/1",
+          "url": "http://localhost:8080/moneytransfer/users/1",
           "method": "GET",
           "body": "{}",
           "headers": [],
@@ -117,7 +117,7 @@
         {
           "_type": "request",
           "_id": "req_1479986709515",
-          "url": "http://localhost:8080/moneytransfer/users/delete/2",
+          "url": "http://localhost:8080/moneytransfer/users/delete/5",
           "method": "DELETE",
           "body": "{}",
           "headers": [],
@@ -151,6 +151,109 @@
             "panel_width": 0.5
           },
           "name": "[Account]: getAllAccounts"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1480283024847",
+          "url": "http://localhost:8080/moneytransfer/accounts/create",
+          "method": "POST",
+          "body": "{}",
+          "headers": [],
+          "params": [
+            {
+              "name": "userId",
+              "value": "5"
+            },
+            {
+              "name": "balance",
+              "value": "55"
+            }
+          ],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[Account]: create"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1480287070345",
+          "url": "http://localhost:8080/moneytransfer/transfers/makeTransaction",
+          "method": "POST",
+          "body": "{}",
+          "headers": [],
+          "params": [
+            {
+              "name": "accountFromId",
+              "value": "2"
+            },
+            {
+              "name": "accountToId",
+              "value": "1"
+            },
+            {
+              "name": "transferSum",
+              "value": "12"
+            }
+          ],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[Transfer] makeTransaction"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1480287177869",
+          "url": "http://localhost:8080/moneytransfer/transfers/6",
+          "method": "GET",
+          "body": "{}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[Transfer] getTransfer"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1480289378981",
+          "url": "http://localhost:8080/moneytransfer/transfers/rollbackTransaction",
+          "method": "POST",
+          "body": "{}",
+          "headers": [],
+          "params": [
+            {
+              "name": "transferId",
+              "value": "6"
+            }
+          ],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "[Transfer] rollbackTransaction"
         }
       ]
     }
