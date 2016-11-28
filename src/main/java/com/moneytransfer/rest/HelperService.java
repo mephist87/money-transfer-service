@@ -68,9 +68,9 @@ public class HelperService {
         StringBuilder result = new StringBuilder();
         result.append("---Users---\n");
         userDAO.list().forEach(user -> result.append(user.toString()).append("\n"));
-        result.append("---Accounts---\n");
+        result.append("\n---Accounts---\n");
         accountDAO.list().forEach(account -> result.append(account.toString()).append("\n"));
-        result.append("---Transfers---\n");
+        result.append("\n---Transfers---\n");
         transferDAO.list().forEach(transfer -> result.append(transfer.toString()).append("\n"));
 
         return result.toString();

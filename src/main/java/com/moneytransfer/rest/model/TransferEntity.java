@@ -35,8 +35,7 @@ public class TransferEntity {
         this.id = id;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne()
     @JoinColumn(name = "ACCOUNT_FROM_ID", referencedColumnName = "ACCOUNT_ID")
     public AccountEntity getAccountFrom() {
         return accountFrom;
@@ -46,8 +45,7 @@ public class TransferEntity {
         this.accountFrom = accountFrom;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne()
     @JoinColumn(name = "ACCOUNT_TO_ID", referencedColumnName = "ACCOUNT_ID")
     public AccountEntity getAccountTo() {
         return accountTo;
