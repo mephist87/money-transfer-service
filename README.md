@@ -40,4 +40,6 @@ Non-functional requirements (NFRs):
 | POST `/createTestData` |  |Helper operation, creates test data, TEXT_HTML representation|
 | GET `/isworking` |  |Helper operation, checks service connectivity, TEXT_HTML representation|
 
-
+## Tests
+Set of test-cases demonstrating the core functionality is presented in [test_cases.md](/test_cases.md)</br>
+Other scenarios could be performed using API described above
